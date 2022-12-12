@@ -1,0 +1,81 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% include "header.html" %}
+
+        <section class="page-section about-heading">
+            <div class="container">
+                <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="static/assets/img/about.jpg" alt="..." />
+                <div class="about-heading-content">
+                    <div class="row">
+                        <div class="col-xl-9 col-lg-10 mx-auto">
+                            <div class="bg-faded rounded p-5">
+                                <h2 class="section-heading mb-4">
+                                    <span class="section-heading-upper">ANALYSIS</span>
+                                </h2>
+                                <p>Analysis based on historical data (with first data from your chosen date, and last data from the latest week of stock trading).
+                                </p>
+                                {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+
+                                {% with messages = get_flashed_messages() %}
+                                   {% if messages %}
+                                      {% for message in messages %}
+                                      <p style="color: red;"> <em> {{ message }} </em> </p>
+                                      {% endfor %}
+                                   {% endif %}
+                                {% endwith %}
+                                <br>
+                                <br>
+                                {% for table in head %}
+                                DATA HEAD :
+                                <h2 class="section-heading mb-4">
+                                    <span class="section-heading-upper"> {{ titles }}</span>
+                                </h2>
+                                {{ table|safe }}
+                                {% endfor %}
+                                <br>
+
+                                {% for table in tail %}
+                                DATA TAIL :
+                                <h2 class="section-heading mb-4">
+                                    <span class="section-heading-upper"> {{ titles }}</span>
+                                </h2>
+                                {{ table|safe }}
+
+                                <br>
+
+                                {{ div }}
+
+                                <br>
+                                <br>
+                                <h2 class="section-heading mb-4">
+                                    <span class="section-heading-upper">Logarithmic Returns</span>
+                                </h2>
+                                <p> The logarithmic return is a way of calculating the rate of return on an investment.
+                                    Estimation of the daily and the annual mean of the obtained log returns.</p>
+                                <p> Daily Mean Return : {{ daily }} </p>
+                                <p> Annual Mean Return : {{ annual }} </p>
+                                <p> Average Annual Return in percentage : {{ percent }} / year, since {{ start_date }} </p>
+                                <h2 class="section-heading mb-4">
+                                    <span class="section-heading-upper">the Risk of a Security</span>
+                                </h2>
+                                <p> Calculating total risk measured by d. standard deviation</p>
+                                <p> Daily Risk : {{ daily_risk }} </p>
+                                <p> Annual Risk : {{ annual_risk }} </p>
+                                <h2 class="section-heading mb-4">
+                                    <span class="section-heading-upper">Monte Carlo Simulation Prediction of Stock Price</span>
+                                </h2>
+                                <p> To predict  the  movement of future stock prices based on the past performance of the indices </p>
+                                <p> The drift provides  insights  on  the  general  direction  of the  stock  (assuming  it  follows  a  normal  distribution),
+                                    the  past expected return of the stock is extrapolated into the future to forecast prices.</p>
+                                <p> Drift : {{ drift | safe }} </p>
+                                <br>
+                                <p> Forecasting future stock prices for every trading day a year ahead. Let’s examine 10 possible outcomes.</p>
+                                {{ graph }}
+
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+{% include "footer.html" %}

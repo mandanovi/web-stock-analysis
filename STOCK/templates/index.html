@@ -1,0 +1,62 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% include "header.html" %}
+
+<section class="page-section about-heading">
+            <div class="container">
+                <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="static/assets/img/aapl.jpg" alt="..." />
+                <div class="about-heading-content">
+                    <div class="row">
+                        <div class="col-xl-9 col-lg-10 mx-auto">
+                            <div class="bg-faded rounded p-5">
+                                <h2 class="section-heading mb-4">
+                                    <span class="section-heading-upper">NEWS</span>
+                                </h2>
+                                <p>Want to get another news from a specific company name or another keyword? Write down below your key-word</p>
+                                {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+
+                                {% with messages = get_flashed_messages() %}
+                                   {% if messages %}
+                                      {% for message in messages %}
+                                      <p style="color: red;"> <em> {{ message }} </em> </p>
+                                      {% endfor %}
+                                   {% endif %}
+                                {% endwith %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</section>
+{% for d in range(1, 11): %}
+        <section class="page-section clearfix">
+            <div class="container">
+                <div class="intro">
+                    <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src="{{ data['articles'][d]['urlToImage'] }}" alt="..." />
+                    <div class="intro-text left-0 text-center bg-faded p-5 rounded">
+                        <h2 class="section-heading mb-4">
+                            <span class="section-heading-upper">{{ data['articles'][d]["title"] | safe }}</span>
+                        </h2>
+                        <p class="mb-3" style="text-align: left">{{ data['articles'][d]["description"] | safe }}</p>
+                        <p style="text-align: left"> {{ data['articles'][d]["content"] | safe }} </p>
+                        <div class="intro-button mx-auto"><a class="btn btn-primary btn-xl" href="{{ data['articles'][d]['url'] | safe }}">Read More</a></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="page-section about-heading">
+            <div class="container">
+                <div>
+                    <div class="row">
+                        <div class="col-xl-9 col-lg-10 mx-auto">
+                            <div >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+{% endfor %}
+{% include "footer.html" %}
